@@ -3,7 +3,7 @@
 
 /*
  * Original Code by @stevemurch on github.com 
- * Modifications for Lancaster Academy for the Preforming Art's 
+ * Modifications for Lancaster Academy for the Performing Art's 
  * production of B&B 2020 by Justin Brubaker (@justbru00)
  */
  
