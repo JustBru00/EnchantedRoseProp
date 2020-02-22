@@ -26,6 +26,11 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial.println("Enchanted Rose Prop - LAPA B&B");    
+  // Inputs 8,9,10,11
+  pinMode(8, INPUT_PULLUP);
+  pinMode(9, INPUT_PULLUP);
+  pinMode(10, INPUT_PULLUP);
+  pinMode(11, INPUT_PULLUP);
 }
 
 void moveServoTest(int servoPin)
@@ -70,31 +75,28 @@ void moveServo(int servoPin, int drop1reset0)
 
   if (drop1reset0==0)
   {
-  pinMode(servoPin, OUTPUT);
-  myservo.attach(servoPin);
+    pinMode(servoPin, OUTPUT);
+    myservo.attach(servoPin);
 
-  int startingPos = myservo.read();
-  // get to 0
+    int startingPos = myservo.read();
+    // get to 0
 
-  Serial.println("RESETTING FROM STARTING SERVO STATE, WHICH IS ");
-  Serial.println(startingPos);
+    Serial.println("RESETTING FROM STARTING SERVO STATE, WHICH IS ");
+    Serial.println(startingPos);
   
-  for (pos = startingPos; pos >=0; pos -= 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(15);                       // waits 15ms for the servo to reach the position
-  }
-  myservo.detach();
-  } 
-
-  else 
-  {
+    for (pos = startingPos; pos >=0; pos -= 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(15);                       // waits 15ms for the servo to reach the position
+    }
+    myservo.detach();
+  } else {
     pinMode(servoPin, OUTPUT);
     myservo.attach(servoPin);
     int startingPos = myservo.read();
 
-  Serial.println("MOVING TO 180 FROM STARTING SERVO STATE, WHICH IS ");
-  Serial.println(startingPos);
+    Serial.println("MOVING TO 180 FROM STARTING SERVO STATE, WHICH IS ");
+    Serial.println(startingPos);
     
     for (pos = startingPos; pos <=180; pos += 1) { // goes from 180 degrees to 0 degrees
       myservo.write(pos);              // tell servo to go to position in variable 'pos'
@@ -125,32 +127,52 @@ void moveServoToPosition(int servoPin, int toPosition)
   Serial.println("RESETTING FROM STARTING SERVO STATE, WHICH IS ");
   Serial.println(startingPos);
 
-  if (toPosition<= startingPos) 
-  {
-  for (pos = startingPos; pos >=toPosition; pos -= 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(10);                       // waits 15ms for the servo to reach the position
-  }
-  myservo.detach();
-  } else 
-  {
-
-for (pos = startingPos; pos < toPosition; pos += 1) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
-    myservo.write(pos);              // tell servo to go to position in variable 'pos'
-    delay(10);                       // waits 15ms for the servo to reach the position
-  }
-  myservo.detach();
-   
-  }
+  if (toPosition<= startingPos) {
+    for (pos = startingPos; pos >=toPosition; pos -= 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(10);                       // waits 15ms for the servo to reach the position
+    }
+    myservo.detach();
+    } else {
+      for (pos = startingPos; pos < toPosition; pos += 1) { // goes from 0 degrees to 180 degrees
+      // in steps of 1 degree
+      myservo.write(pos);              // tell servo to go to position in variable 'pos'
+      delay(10);                       // waits 15ms for the servo to reach the position
+      }
+    myservo.detach();   
+    }
 }
 
 // LOOP
 // Watch for digital inputs.
 
-void loop() { 
- 
-  // TODO Watch for digital inputs and detach petals based on them.
+int DROP = 1;
+int RESET = 0;
 
+void loop() {  
+  // Watch for digital inputs and detach petals based on them.
+  // Inputs 8,9,10,11
+  // Servo Pins: 2,3,4,5 -- THIS IS HARDCODED IN THE PROGRAM
+  int input1 = digitalRead(8);
+  int input2 = digitalRead(9);
+  int input3 = digitalRead(10);
+  int input4 = digitalRead(11);
+
+  if (input1 == LOW) {
+    // Input 1 on pin 8 is closed.
+    moveServo(2, DROP);
+  } else if (input2 == LOW) {
+    // Input 2 on pin 9 is closed.
+    moveServo(3, DROP);
+  } else if (input3 == LOW) {
+    // Input 3 on pin 10 is closed.
+    moveServo(4, DROP);
+  } else if (input4 == LOW) {
+    // Input 4 on pin 11 is closed.
+    moveServo(5, DROP);
+  }
+
+  // TODO RESET
+  
 }
