@@ -58,8 +58,8 @@ void resetProp() {
   // Reset all servos
   moveServo(2, 0);
   moveServo(3, 0);
+  moveServo(4, 0);
   moveServo(5, 0);
-  moveServo(6, 0);
 }
 
 void moveServo(int servoPin, int drop1reset0)
