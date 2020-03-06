@@ -3,8 +3,8 @@
 
 /*
  * Original Code by @stevemurch on github.com 
- * Modifications for Lancaster Academy for the Performing Art's 
- * production of B&B 2020 by Justin Brubaker (@justbru00)
+ * Modifications for Lancaster Academy for the Preforming Arts 
+ * production of Beauty and the Beast 2020 by Justin Brubaker (@justbru00)
  */
  
 // BOARD SETUP
