@@ -31,6 +31,8 @@ void setup() {
   pinMode(9, INPUT_PULLUP);
   pinMode(10, INPUT_PULLUP);
   pinMode(11, INPUT_PULLUP);
+
+  resetProp();
 }
 
 void moveServoTest(int servoPin)
@@ -65,8 +67,10 @@ void resetProp() {
 void moveServo(int servoPin, int drop1reset0)
 {
   Serial.println("Move servo [servoPin, state]");
-  Serial.println(servoPin);
-  Serial.println(drop1reset0);
+  Serial.print(servoPin);
+  Serial.print(" ");
+  Serial.print(drop1reset0);
+  Serial.print("\n");
 
   if (myservo.attached())
   {
@@ -80,9 +84,6 @@ void moveServo(int servoPin, int drop1reset0)
 
     int startingPos = myservo.read();
     // get to 0
-
-    Serial.println("RESETTING FROM STARTING SERVO STATE, WHICH IS ");
-    Serial.println(startingPos);
   
     for (pos = startingPos; pos >=0; pos -= 1) { // goes from 0 degrees to 180 degrees
       // in steps of 1 degree
@@ -94,9 +95,6 @@ void moveServo(int servoPin, int drop1reset0)
     pinMode(servoPin, OUTPUT);
     myservo.attach(servoPin);
     int startingPos = myservo.read();
-
-    Serial.println("MOVING TO 180 FROM STARTING SERVO STATE, WHICH IS ");
-    Serial.println(startingPos);
     
     for (pos = startingPos; pos <=180; pos += 1) { // goes from 180 degrees to 0 degrees
       myservo.write(pos);              // tell servo to go to position in variable 'pos'
@@ -161,16 +159,32 @@ void loop() {
 
   if (input1 == LOW) {
     // Input 1 on pin 8 is closed.
+    Serial.println("INPUT1 - PIN 8");
     moveServo(2, DROP);
+    delay(1500);
+    moveServo(2, RESET);
+    Serial.println("READY FOR NEXT COMMAND");
   } else if (input2 == LOW) {
     // Input 2 on pin 9 is closed.
+    Serial.println("INPUT2 - PIN 9");
     moveServo(3, DROP);
+    delay(1500);
+    moveServo(3, RESET);
+    Serial.println("READY FOR NEXT COMMAND");
   } else if (input3 == LOW) {
     // Input 3 on pin 10 is closed.
+    Serial.println("INPUT3 - PIN 10");
     moveServo(4, DROP);
+    delay(1500);
+    moveServo(4, RESET);
+    Serial.println("READY FOR NEXT COMMAND");
   } else if (input4 == LOW) {
     // Input 4 on pin 11 is closed.
+    Serial.println("INPUT4 - PIN 11");
     moveServo(5, DROP);
+    delay(1500);
+    moveServo(5, RESET);
+    Serial.println("READY FOR NEXT COMMAND");
   }
 
   // TODO RESET
